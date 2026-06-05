@@ -1,5 +1,4 @@
-"""Encoding score (paper sec.3.2): per-sample class-discriminability after
-amplitude encoding.
+"""HEM score: per-sample class-discriminability after amplitude (or angle) encoding.
 
 Two-stage API:
   1) `compute_class_means(reducer, train_loader, ...)` builds the per-class
@@ -7,9 +6,8 @@ Two-stage API:
   2) `compute_scores(reducer, loader, class_means, ...)` scores any split
      (train / val / test) against those *training-derived* means.
 
-This split is what the toy guide sec.4.1 originally lacked - without it, the val
-and test "WE-region" labels would be defined against their own means, drifting
-from the train-set definition.
+Using training-derived means for val/test ensures the CE-region threshold is
+defined consistently across all splits.
 """
 from __future__ import annotations
 

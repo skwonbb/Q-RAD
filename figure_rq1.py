@@ -56,7 +56,7 @@ s_ang, labels_ang = compute_scores_for_encoding('angle', 'angle')
 thr_amp = float(np.percentile(s_amp, 20.0))
 thr_ang = float(np.percentile(s_ang, 20.0))
 
-# ---- (b) Bar chart data: 6 setups, M1 acc on WE / nW for both encodings ----
+# ---- (c) Bar chart data: 6 setups, Baseline acc on CE / PE for both encodings ----
 PD_MAP = {'mnist': 'results/paper', 'fmnist': 'results/paper_fmnist'}
 SETUPS = [
     ('mnist', '4q4c'), ('mnist', '4q10c'), ('mnist', '8q4c'),
