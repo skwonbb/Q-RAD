@@ -89,7 +89,7 @@ summary = []
 for ds_key, ds_label, nq, nc, cls, pd_orig, pqc_ce_lam, q_ce_label in SETUPS:
     seeds = sorted(int(d.name.split("_")[1]) for d in pd_orig.glob("seed_*"))
     if not seeds:
-        print(f"\n[skip] {ds_label}: no seeds under {pd_orig} — run run_paper_main first.")
+        print(f"\n[skip] {ds_label}: no seeds under {pd_orig} - run run_paper_main first.")
         continue
     print(f"\n========== {ds_label}  PQC_CE λ={pqc_ce_lam}  ({len(seeds)} seeds: {seeds}) ==========")
     tl, vl, te, train_ds, _, _ = load_data(ds_key, 400, 100, 200, 32, DATA_SEED, cls)

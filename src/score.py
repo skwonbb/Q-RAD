@@ -1,4 +1,4 @@
-"""Encoding score (paper §3.2): per-sample class-discriminability after
+"""Encoding score (paper sec.3.2): per-sample class-discriminability after
 amplitude encoding.
 
 Two-stage API:
@@ -7,7 +7,7 @@ Two-stage API:
   2) `compute_scores(reducer, loader, class_means, ...)` scores any split
      (train / val / test) against those *training-derived* means.
 
-This split is what the toy guide §4.1 originally lacked — without it, the val
+This split is what the toy guide sec.4.1 originally lacked - without it, the val
 and test "WE-region" labels would be defined against their own means, drifting
 from the train-set definition.
 """
@@ -24,7 +24,7 @@ def _statevector_amplitude(reduced_x: np.ndarray, n_qubits: int) -> np.ndarray:
     real reduced vector and treat it as a statevector amplitude (real-valued).
 
     Returns a complex array of length 2**n_qubits. Zero-norm inputs map to
-    |0...0⟩ as a defined fallback.
+    |0...0> as a defined fallback.
     """
     norm = float(np.linalg.norm(reduced_x))
     if norm < 1e-10:
@@ -35,8 +35,8 @@ def _statevector_amplitude(reduced_x: np.ndarray, n_qubits: int) -> np.ndarray:
 
 
 def _statevector_angle(angles: np.ndarray, n_qubits: int) -> np.ndarray:
-    """Mirror `qml.AngleEmbedding(..., rotation='Y')`: per-qubit R_Y(θ_i)|0⟩,
-    giving a product state $\\bigotimes_i (\\cos(θ_i/2)|0⟩ + \\sin(θ_i/2)|1⟩)$.
+    """Mirror `qml.AngleEmbedding(..., rotation='Y')`: per-qubit R_Y(θ_i)|0>,
+    giving a product state $\\bigotimes_i (\\cos(θ_i/2)|0> + \\sin(θ_i/2)|1>)$.
 
     Builds the 2^n complex statevector via repeated Kronecker product.
     """
@@ -81,7 +81,7 @@ def compute_class_means(
     device: str = "cpu",
     encoding: str = "amplitude",
 ) -> list[np.ndarray]:
-    """Per-class average density matrix ρ̄_c = (1/|S_c|) Σ |ψ(x)⟩⟨ψ(x)|.
+    """Per-class average density matrix rhō_c = (1/|S_c|) Σ |psi(x)><psi(x)|.
 
     Returns a list of complex density matrices, indexed by remapped class id
     (0 .. num_classes-1). Shape of each: (2**n_qubits, 2**n_qubits).
@@ -110,14 +110,14 @@ def compute_scores(
     encoding: str = "amplitude",
 ) -> dict[int, float]:
     """For each sample (x, y, idx) in `loader`, compute
-        s(x) = ⟨ψ(x)| ρ̄_y |ψ(x)⟩ − max_{c≠y} ⟨ψ(x)| ρ̄_c |ψ(x)⟩
+        s(x) = <psi(x)| rhō_y |psi(x)> − max_{c≠y} <psi(x)| rhō_c |psi(x)>
     using the supplied (typically training-derived) `class_means`.
     """
     if len(class_means) != num_classes:
         raise ValueError("len(class_means) must equal num_classes.")
     scores: dict[int, float] = {}
     for idx, label, sv in _encode_batch(reducer, loader, n_qubits, device, encoding=encoding):
-        # ⟨ψ| ρ |ψ⟩ for each class — real by construction (ρ Hermitian)
+        # <psi| rho |psi> for each class - real by construction (rho Hermitian)
         fids = [float(np.real(sv.conj() @ rho @ sv)) for rho in class_means]
         same = fids[label]
         other_max = max(f for c, f in enumerate(fids) if c != label)
@@ -132,7 +132,7 @@ def make_we_mask(
     """Bottom-`percentile`% of scores are tagged WE.
 
     Returns (set_of_we_indices, threshold). The threshold is the percentile
-    cutoff itself — store it so val/test can be classified against the *same*
+    cutoff itself - store it so val/test can be classified against the *same*
     train-derived cutoff.
     """
     if not scores:

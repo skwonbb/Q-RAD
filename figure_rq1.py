@@ -1,6 +1,6 @@
 """RQ1 figure (Fig 1 in paper): HEM distribution under two encodings + baseline accuracy on CE vs PE.
 
-Layout: 1 row × 3 panels.
+Layout: 1 row x 3 panels.
   (a) violin: HEM score distribution under amplitude encoding (MNIST 4q+4c)
   (b) violin: HEM score distribution under angle encoding (MNIST 4q+4c)
   (c) bar:    Baseline accuracy on CE vs PE across 6 setups, both encodings
@@ -72,14 +72,24 @@ for dname, tag in SETUPS:
         'we_mean': ce.mean(), 'we_std': ce.std(ddof=1),
         'nw_mean': pe.mean(), 'nw_std': pe.std(ddof=1),
     }
-# Angle-encoding baseline: produced by a separate runner (see README).
+# Angle-encoding baseline (multi-seed): produced by a separate runner (see README).
 ang_path = Path("results/q0_angle_baseline/results.json")
 ang_data = {}
 if ang_path.exists():
     ang_results = json.load(open(ang_path))
-    ang_data = {(r['dataset'], r['tag']): r['test'] for r in ang_results}
+    from collections import defaultdict
+    grouped = defaultdict(list)
+    for r in ang_results:
+        grouped[(r['dataset'], r['tag'])].append(r['test'])
+    for key, runs in grouped.items():
+        ce = np.array([t['acc_we']     for t in runs])
+        pe = np.array([t['acc_non_we'] for t in runs])
+        ang_data[key] = {
+            'ce_mean': ce.mean(), 'ce_std': ce.std(ddof=1) if len(ce) > 1 else 0.0,
+            'pe_mean': pe.mean(), 'pe_std': pe.std(ddof=1) if len(pe) > 1 else 0.0,
+        }
 else:
-    print(f"  [warn] {ang_path} missing — panel (c) will skip angle bars.")
+    print(f"  [warn] {ang_path} missing - panel (c) will skip angle bars.")
 
 # ---- Layout: 1 row x 3 panels with width ratios [1, 1, 2.6] ----
 fig = plt.figure(figsize=(18, 2.5))
@@ -118,22 +128,19 @@ amp_pe     = [amp_data[s]['nw_mean']  for s in SETUPS]
 amp_pe_err = [amp_data[s]['nw_std']   for s in SETUPS]
 
 ax_bar.bar(x - 1.5*w, amp_ce, w, yerr=amp_ce_err, capsize=3,
-           color='#d35400', label='Amplitude — CE')
+           color='#d35400', label='Amplitude - CE')
 ax_bar.bar(x - 0.5*w, amp_pe, w, yerr=amp_pe_err, capsize=3,
-           color='#27ae60', label='Amplitude — PE')
+           color='#27ae60', label='Amplitude - PE')
 
 if ang_data:
-    ang_ce = [ang_data[s]['acc_we']     for s in SETUPS]
-    ang_pe = [ang_data[s]['acc_non_we'] for s in SETUPS]
-    # Approximate angle error bars from amplitude std (angle baseline ran 1 seed)
-    _rng = np.random.default_rng(0)
-    ang_ce_err = np.array(amp_ce_err) * _rng.uniform(0.55, 1.45, size=len(amp_ce_err))
-    ang_pe_err = np.array(amp_pe_err) * _rng.uniform(0.55, 1.45, size=len(amp_pe_err))
-    ang_ce_err[5] = amp_ce_err[5] * 0.55
+    ang_ce     = [ang_data[s]['ce_mean'] for s in SETUPS]
+    ang_ce_err = [ang_data[s]['ce_std']  for s in SETUPS]
+    ang_pe     = [ang_data[s]['pe_mean'] for s in SETUPS]
+    ang_pe_err = [ang_data[s]['pe_std']  for s in SETUPS]
     ax_bar.bar(x + 0.5*w, ang_ce, w, yerr=ang_ce_err, capsize=3,
-               color='#f39c12', alpha=0.75, hatch='//', label='Angle — CE')
+               color='#f39c12', alpha=0.75, hatch='//', label='Angle - CE')
     ax_bar.bar(x + 1.5*w, ang_pe, w, yerr=ang_pe_err, capsize=3,
-               color='#52be80', alpha=0.75, hatch='//', label='Angle — PE')
+               color='#52be80', alpha=0.75, hatch='//', label='Angle - PE')
 
 ax_bar.set_xticks(x)
 ax_bar.set_xticklabels([f"{d.upper()}\n{t.replace('q', 'q+')}" for d, t in SETUPS])

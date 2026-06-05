@@ -1,4 +1,4 @@
-"""Unified training loop for the ablation methods (toy guide §5 + reverse variants).
+"""Unified training loop for the ablation methods (toy guide sec.5 + reverse variants).
 
 Method ID | name                             | L_task    | L_KD                  | Data
 ----------|----------------------------------|-----------|-----------------------|------
@@ -62,7 +62,7 @@ def compute_loss(
 
     `task_component + kd_component == total_loss` (when both are nonzero), so
     logging the two parts separately reveals when the KD term overwhelms the
-    task term — the failure mode we hit at lambda=0.5, T=4.
+    task term - the failure mode we hit at lambda=0.5, T=4.
     """
     task_per = F.cross_entropy(student_logits, y, reduction="none")
     kd_per = _per_sample_kd(student_logits, teacher_logits, temperature)

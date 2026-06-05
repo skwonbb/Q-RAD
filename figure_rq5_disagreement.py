@@ -1,5 +1,5 @@
 """Figure: pixel-score vs quantum-score scatter, with threshold lines and quadrant coloring.
-Shows that the two scores disagree on which samples are CE — and the disagreement region
+Shows that the two scores disagree on which samples are CE - and the disagreement region
 (p-only, q-only) is where the experimental gap lives.
 
 Layout: 1 row (FMNIST only) x 3 cols (4q+4c, 4q+10c, 8q+4c).
@@ -94,7 +94,7 @@ for c_i, (ds_key, label, nq, nc, cls) in enumerate(SETUPS):
     ax = axes[c_i]
     # Faint neither (background only)
     ax.scatter(xs[neither], ys[neither], s=4, c=COL_NEITHER, alpha=0.18, label="neither")
-    # Colored quadrants — larger markers so visible at small render
+    # Colored quadrants - larger markers so visible at small render
     ax.scatter(xs[both],    ys[both],    s=22, c=COL_BOTH,    alpha=0.9, label="both")
     ax.scatter(xs[q_only],  ys[q_only],  s=22, c=COL_Q_ONLY,  alpha=0.9, label="only by HEM")
     ax.scatter(xs[p_only],  ys[p_only],  s=22, c=COL_P_ONLY,  alpha=0.9, label="only by NCM")
@@ -103,7 +103,7 @@ for c_i, (ds_key, label, nq, nc, cls) in enumerate(SETUPS):
     ax.axvline(thr_q, color='black', linestyle='--', linewidth=0.8, alpha=0.6)
     ax.axhline(thr_p, color='black', linestyle='--', linewidth=0.8, alpha=0.6)
 
-    # Subplot title — bold via rcParams default
+    # Subplot title - bold via rcParams default
     ax.set_title(label)
     # tick density: reduce to ~3 per axis so they don't overlap at large font
     ax.locator_params(axis='both', nbins=4)

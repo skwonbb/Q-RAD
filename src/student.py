@@ -152,7 +152,7 @@ if __name__ == "__main__":
     print(f"reducer 8q: x{tuple(xb.shape)} -> z{tuple(z8.shape)}  (expect (8,256))")
     assert z8.shape == (8, 256)
 
-    # 2) QuantumStudent forward — default.qubit (broadcast)
+    # 2) QuantumStudent forward - default.qubit (broadcast)
     print("\n-- default.qubit (backprop, broadcast) --")
     model_d = QuantumStudent(n_qubits=4, n_layers=2, num_classes=4, device_kind="default")
     t0 = time.perf_counter()
@@ -169,7 +169,7 @@ if __name__ == "__main__":
     print(f"backward OK: head_grad_norm={head_grad.norm():.4f}  qweights_grad_norm={qw_grad.norm():.4f}")
     assert head_grad is not None and qw_grad is not None
 
-    # 3) QuantumStudent forward — lightning.qubit (loop) — speed comparison
+    # 3) QuantumStudent forward - lightning.qubit (loop) - speed comparison
     print("\n-- lightning.qubit (adjoint, internal loop) --")
     torch.manual_seed(42)
     model_l = QuantumStudent(n_qubits=4, n_layers=2, num_classes=4, device_kind="lightning")

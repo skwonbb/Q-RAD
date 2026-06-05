@@ -23,7 +23,7 @@ All commands run from the repository root. Outputs are written under `results/`.
 ```bash
 python run_paper_main.py          # amplitude Baselines on MNIST (also used by RQ2-5)
 python run_paper_main_fmnist.py   # amplitude Baselines on FMNIST
-python run_angle_baseline.py      # angle-encoding Baseline, 1 seed × 6 setups
+python run_angle_baseline.py      # angle-encoding Baselines, 5 seeds × 6 setups (MNIST + FMNIST)
 python figure_rq1.py              # writes results/figures/figure_rq1.png
 ```
 

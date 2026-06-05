@@ -1,4 +1,4 @@
-"""Q-RAD main experiments on FashionMNIST — 5 seeds × 3 setups × 5 models.
+"""Q-RAD main experiments on FashionMNIST - 5 seeds x 3 setups x 5 models.
 
 Method mapping (paper label ↔ internal method_id):
   Baseline       = method_id 1, no KD                          (4L)
@@ -194,7 +194,7 @@ def run_setup(tag, n_qubits, num_classes, classes, has_lam0p5):
     return setup_res
 
 def main():
-    print(f"# Q-RAD FMNIST main run — {len(ALL_SEEDS)} seeds × {len(SETUPS)} setups × 5 models")
+    print(f"# Q-RAD FMNIST main run - {len(ALL_SEEDS)} seeds x {len(SETUPS)} setups x 5 models")
     print(f"# config: PQC_PE (λ=0.1, T=2) + PQC_CE_lam0p3 (λ=0.3, T=2), CE percentile=20%")
     print(f"# 4q+10c also trains PQC_CE_lam0p5 for direct λ comparison")
     print(f"# seeds (random this run): {ALL_SEEDS}")
@@ -208,7 +208,7 @@ def main():
 
     # Final cross-setup table
     print(f"\n{'='*120}")
-    print(f"# Q-RAD FMNIST final table — {len(ALL_SEEDS)} seeds per setup")
+    print(f"# Q-RAD FMNIST final table - {len(ALL_SEEDS)} seeds per setup")
     print(f"{'='*120}")
     print(f"{'setup':<8}{'seeds':>7}{'Base':>9}{'B+KD':>9}{'Fair':>9}{'PQC_PE':>10}{'CE_0.3':>10}{'CE_0.5':>10}{'QRAD_.3':>10}{'QRAD_.5':>10}{'Δ_Fair':>9}")
     print("-" * 120)

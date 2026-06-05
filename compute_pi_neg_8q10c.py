@@ -1,4 +1,4 @@
-"""Compute π_neg for the 8q+10c setup on MNIST and FMNIST (paper §RQ4 footnote).
+"""Compute π_neg for the 8q+10c setup on MNIST and FMNIST (paper sec.RQ4 footnote).
 
 Mirrors the π_neg block in build_main_table.py: build a tutorial-reducer
 QuantumStudent (untrained reference encoder, n_layers=4), score the training
