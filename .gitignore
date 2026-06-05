@@ -1,0 +1,19 @@
+# IDE
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# Local data / cached results
+data/
+results/
+
+# OS
+.DS_Store
+Thumbs.db
