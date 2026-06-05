@@ -1,10 +1,11 @@
-# Q-RAD
+# Q-RAD (CIKM 2026)
 
-Reproduction code for **Q-RAD**, a dual-PQC knowledge-distillation framework that
-trains two compact specialists — one for the Compression-affected Encoding (CE)
-region and one for the Properly Encoded (PE) region — and combines them via
-oracle routing. Experiments cover MNIST and FashionMNIST under three
-(qubit, class) configurations.
+> Reproduction code for the paper under double-blind review.
+
+**Q-RAD** is a dual-PQC knowledge-distillation framework that trains two compact
+specialists - one for the Compression-affected Encoding (CE) region and one for
+the Properly Encoded (PE) region - and combines them via oracle routing.
+Experiments cover MNIST and FashionMNIST under three (qubit, class) configurations.
 
 ## Setup
 
