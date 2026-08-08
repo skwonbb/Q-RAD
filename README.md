@@ -1,8 +1,8 @@
 # Q-RAD (CIKM 2026)
 
 **Q-RAD** is a dual-PQC knowledge-distillation framework that trains two compact
-specialists - one for the Compression-affected Encoding (CE) region and one for
-the Properly Encoded (PE) region - and combines them via oracle routing.
+specialists - one for the collapsed-encoding (CE) region and one for
+the preserved-encoding (PE) region - and combines them via oracle routing.
 Experiments cover MNIST and FashionMNIST under three (qubit, class) configurations.
 
 ## Setup
